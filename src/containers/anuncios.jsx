@@ -51,13 +51,13 @@ const Anuncios = () => {
         <Box width={'100%'} pb={2} />
         <Container maxWidth={'lg'}>
             <Grid container spacing={2}>
-                <Grid item md={3}>
+                <Grid item xs={12} sm={4} md={3}>
                     <StatesDropdown onChange={handleChangeState} />
                 </Grid>
-                <Grid item md={3}>
+                <Grid item xs={12} sm={4} md={3}>
                     <CitiesDropdown state_id={state?.id || null} onChange={handleChangeCity}/>
                 </Grid>
-                <Grid item md={3}>
+                <Grid item xs={12} sm={4} md={3}>
                     <CategoriesDropdown onChange={handleChangeCategory} />
                 </Grid>
             </Grid>
