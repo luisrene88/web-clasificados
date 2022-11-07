@@ -1,12 +1,14 @@
-import {Box, Button, Divider, Grid} from "@mui/material";
+import {Box, Button, Divider, Grid, Paper, Toolbar} from "@mui/material";
 import {useEffect, useState} from "react";
+import TypographyWhite from "./TypographyWhite";
 
-const AnnouncesByCategory = ({category}) =>{
+const AnnouncesByCategory = ({city_id, category}) =>{
     const [data, setData] = useState([]);
     const [nextPage, setNextPage] = useState(null);
     const [prevPage, setPrevPage] = useState(null);
     useEffect(()=>{
-        fetch(`http://localhost:9001/api/posts/list?category_id=${category.id}`)
+        if(!city_id) return;
+        fetch(`http://localhost:9001/api/posts/list?category_id=${category.id}&city_id=${city_id}`)
             .then((resp)=>{
                 return resp.json();
             })
@@ -17,13 +19,23 @@ const AnnouncesByCategory = ({category}) =>{
                 setNextPage(data.next);
                 setPrevPage(data.previous);
             })
-    },[category])
+    },[category, city_id])
     return <Grid container spacing={2}>
-        <Grid xs={12}>{category.name}</Grid>
+        <Grid xs={12} item>
+            <Box bgcolor={'primary.main'}>
+                <Toolbar variant={'dense'}>
+                    <TypographyWhite>{category.name}</TypographyWhite>
+                </Toolbar>
+            </Box>
+        </Grid>
         {
             data.map(item=>{
-                return <Grid key={item.id} xs={12} sm={3} md={4}>
-                    <Box>{item.title}</Box>
+                return <Grid key={item.id} xs={12} sm={3} md={4} item>
+                    <Paper sx={{overflow: 'hidden'}}>
+                        <Box bgcolor={'primary.main'} p={1}>
+                            <TypographyWhite>{item.title}</TypographyWhite>
+                        </Box>
+                    </Paper>
                     <Box>{item.description}</Box>
                 </Grid>
             })

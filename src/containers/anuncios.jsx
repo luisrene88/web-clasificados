@@ -4,11 +4,13 @@ import StatesDropdown from "../components/StatesDropdown";
 import {useEffect, useState} from "react";
 import CitiesDropdown from "../components/CitiesDropdown";
 import CategoriesDropdown from "../components/CategoriesDropdown";
+import AnnouncesByCategory from "../components/AnnouncesByCategory";
 
 const Anuncios = () => {
     const [state, setState] = useState();
     const [city, setCity] = useState();
     const [category, setCategory] = useState();
+    const [categories, setCategories] = useState([]);
 
     const handleChangeState = (event, option) => {
         if(option){
@@ -36,8 +38,13 @@ const Anuncios = () => {
     }
 
     useEffect(()=>{
-
-    },[])
+        if(!city) return;
+        fetch(`http://localhost:9001/api/posts/categories`+(category ? `?id=${category.id}` : "")).then((resp)=>{
+            return resp.json();
+        }).then((data)=>{
+            setCategories(data.results);
+        })
+    }, [category, city])
 
     return <Box>
         <PageNavbar />
@@ -54,7 +61,13 @@ const Anuncios = () => {
                     <CategoriesDropdown onChange={handleChangeCategory} />
                 </Grid>
             </Grid>
-
+            <Box width={'100%'} pt={4}>
+            {
+                categories.map( cat => {
+                    return <AnnouncesByCategory key={cat.id} category={cat} city_id={city?.id || null}  />
+                })
+            }
+            </Box>
         </Container>
     </Box>
 }

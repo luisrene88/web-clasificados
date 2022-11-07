@@ -1,7 +1,7 @@
-import {AppBar, Container, Toolbar, Typography} from "@mui/material";
+import {AppBar, Toolbar, Typography} from "@mui/material";
 
 const PageNavbar = () =>{
-    return <AppBar position={'sticky'}>
+    return <AppBar elevation={1} color={'transparent'} position={'sticky'}>
         <Toolbar>
             <Typography variant={'h5'}>
                 Clasificados
