@@ -1,10 +1,13 @@
 import { Box } from "@mui/material";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import App from "./App";
+import CssBaseline from '@mui/material/CssBaseline';
 
 const Index =()=>{
-    return <Box bgcolor={'#1289A7'}>
-Hello
+    return <Box>
+        <CssBaseline />
+        <App/>
     </Box>
 }
 export default Index;
